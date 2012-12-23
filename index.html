@@ -3,13 +3,14 @@
 <head>
   <meta charset="utf-8">
   <title> html_template </title>
-  <link rel="stylesheet" href="assets/css/bootstrap.min.css"  media="screen">
-  <!--[if lt IE 9]>
-    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-  <![endif]-->
+  <link rel="stylesheet" href="assets/css/bootstrap.css">
+  <link rel="stylesheet" href="assets/css/font-awesome.css">
   <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.4/leaflet.css" />
   <!--[if lte IE 8]>
   <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.4/leaflet.ie.css" />
+  <![endif]-->
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
   <style>
     /* CSS HERE */
@@ -17,46 +18,38 @@
 </head>
 <body>
   <div class="container-fluid">
-    <div class="row">
-      <div class ="span12">      
-        <h1>html_template</h1>
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <a class="brand" href="#">HTML Template</a>
+        <ul class="nav">
+          <li><a href="#bootsrap"><i class="icon-twitter"></i> Bootstrap</a></li>
+          <li><a href="#d3"><i class="icon-file"></i> d3</a></li>
+          <li><a href="#leaflet"><i class="icon-leaf"></i> Leaflet</a></li>
+          <li><a href="#highcharts"><i class="icon-bar-chart"></i> Highcharts</a></li>
+        </ul>
       </div>
     </div>
     <div class="row">
-      <div class="span2">
-        <ul class="nav nav-tabs nav-stacked">
-          <li><a href="#bootsrap"><i class="icon-chevron-right"></i> Bootstrap</a></li>
-          <li><a href="#d3"><i class="icon-chevron-right"></i> d3</a></li>
-          <li><a href="#leaflet"><i class="icon-chevron-right"></i> Leaflet</a></li>
-          <li><a href="#highcharts"><i class="icon-chevron-right"></i> Highcharts</a></li>
-        </ul>
-      </div>
-      <div class="span10">
-        
-        <div class="row">
-          <ul class="thumbnails">
-            <li class="span12">
-              <h2>Bootstrap</h2>
-              <a href="#myModal" role="button" class="btn btn-large btn-block btn-success" data-toggle="modal">Go!</a>
-            </li>
-            <li class="span12">
-              <h2>d3</h2>
-              <div id="d3-container" class="thumbnail" style="height:350px;">
-                <pre>d3.select("div#d3-container").style("background-color", "#eee");</pre>
-              </div>
-            </li>
-            <li class="span12">
-              <h2>Leaflet</h2>
-              <div id="map-container" class="thumbnail" style="height:350px; "></div>
-            </li>
-            <li class="span12">
-              <h2>Highcharts</h2>
-              <div id="chart-container" class="thumbnail" style="height:350px; "></div>
-            </li>
-          </ul>
-        </div>
-        
-      </div>
+      <ul class="thumbnails">
+        <li class="span12">
+          <h2>Bootstrap</h2>
+          <a href="#myModal" role="button" class="btn btn-large btn-block btn-success" data-toggle="modal">Go!</a>
+        </li>
+        <li class="span12">
+          <h2>d3</h2>
+          <div id="d3-container" class="thumbnail" style="height:350px;">
+            <pre>d3.select("div#d3-container").style("background-color", "#eee");</pre>
+          </div>
+        </li>
+        <li class="span12">
+          <h2>Leaflet</h2>
+          <div id="map-container" class="thumbnail" style="height:350px; "></div>
+        </li>
+        <li class="span12">
+          <h2>Highcharts</h2>
+          <div id="chart-container" class="thumbnail" style="height:350px; "></div>
+        </li>
+      </ul>
     </div>
   </div><!-- .container -->
   
