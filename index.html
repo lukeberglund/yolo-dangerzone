@@ -22,10 +22,10 @@
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
 </head>
-<body>
+<body data-spy="scroll" data-target="#mainNav">
   
   <!-- NAVIGATION BAR -->
-  <div class="navbar navbar-inverse navbar-fixed-top">
+  <div class="navbar navbar-inverse navbar-fixed-top" id="mainNav">
     <div class="navbar-inner">
       <div class="container">
         <!-- EXPAND/COLLAPSE BUTTON -->
@@ -35,12 +35,12 @@
            <span class="icon-bar"></span>
         </a>
         <!-- BRAND -->
-        <a class="brand" href="#">HTML Template</a>
+        <a class="brand" href="">HTML Template</a>
         <!-- SECTION THAT WILL COLLAPSE AND MOVE, BASED ON WINDOW SIZE-->
         <div class="nav-collapse collapse">
           <!-- THE ACTUAL NAVIGATION-->
           <ul class="nav">
-            <li><a href="#bootsrap"><i class="icon-twitter"></i> Bootstrap</a></li>
+            <li class="active"><a href="#bootsrap"><i class="icon-twitter"></i> Bootstrap</a></li>
             <li><a href="#d3"><i class="icon-file"></i> d3</a></li>
             <li><a href="#leaflet"><i class="icon-leaf"></i> Leaflet</a></li>
             <li><a href="#highcharts"><i class="icon-bar-chart"></i> Highcharts</a></li>
@@ -75,6 +75,21 @@
     </footer>
   </div><!--/.container-fluid-->
   
+  <!-- SAMPLE BOOTSTRAP MODAL IMPLEMENTATION-->
+    <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">Modal header</h3>
+      </div>
+      <div class="modal-body">
+        <p>One fine body…</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+        <button class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  
   <!-- JAVASCRIPT LIBRARIES -->
   <script src="http://d3js.org/d3.v3.min.js"></script>
   <script src="http://cdn.leafletjs.com/leaflet-0.4/leaflet.js"></script>
@@ -84,9 +99,7 @@
   <script src="http://code.highcharts.com/highcharts.js"></script>  
 
   <script>
-    // SAMPLE BOOTSTRAP IMPLEMENTATION
-      $('#navbar').scrollspy()
-    
+
     // SAMPLE D3 IMPLEMENTATION
     d3.select("div#d3-container").style("background-color", "#eee");
     
