@@ -22,7 +22,7 @@
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
 </head>
-<body data-spy="scroll" data-target="#mainNav" data-offset="-50">
+<body data-spy="scroll" data-target="#mainNav" data-offset="60">
   
   <!-- NAVIGATION BAR -->
   <div class="navbar navbar-inverse navbar-fixed-top" id="mainNav">
@@ -40,7 +40,7 @@
         <div class="nav-collapse collapse">
           <!-- THE ACTUAL NAVIGATION-->
           <ul class="nav">
-            <li class="active"><a href="#bootsrap"><i class="icon-twitter"></i> Bootstrap</a></li>
+            <li class="active"><a href="#bootstrap"><i class="icon-twitter"></i> Bootstrap</a></li>
             <li><a href="#d3"><i class="icon-file"></i> d3</a></li>
             <li><a href="#leaflet"><i class="icon-leaf"></i> Leaflet</a></li>
             <li><a href="#highcharts"><i class="icon-bar-chart"></i> Highcharts</a></li>
@@ -54,7 +54,7 @@
   <!-- CONTENT CONTAINER -->
   <div id="page" class="container">
     <div id="bootstrap">
-      <h2 id="errbodyintheclubgettintips">Bootstrap</h2>
+      <h2>Bootstrap</h2>
       <a href="#myModal" role="button" class="btn btn-large btn-block btn-success" data-toggle="modal">Go!</a>
     </div>
     <div id="d3">
@@ -105,14 +105,7 @@
   <script>
 
     // BOOTSTRAP JS IMPLEMENTATIONS
-    $("#errbodyintheclubgettintips").tooltip();
     $("a").tooltip();
-    
-    $(document).ready(function () {
-        //$("[rel=tooltip]").tooltip();
-        $('#errbodyintheclubgettintips').tooltip();
-        
-      });
     
     // SAMPLE D3 IMPLEMENTATION
     d3.select("div#d3-container").style("background-color", "#eee");
