@@ -22,7 +22,7 @@
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
 </head>
-<body data-spy="scroll" data-target="#mainNav" data-offset="60">
+<body data-spy="scroll" data-target="#mainNav" data-offset="-50">
   
   <!-- NAVIGATION BAR -->
   <div class="navbar navbar-inverse navbar-fixed-top" id="mainNav">
@@ -54,7 +54,7 @@
   <!-- CONTENT CONTAINER -->
   <div id="page" class="container">
     <div id="bootstrap">
-      <h2>Bootstrap</h2>
+      <h2 id="errbodyintheclubgettintips">Bootstrap</h2>
       <a href="#myModal" role="button" class="btn btn-large btn-block btn-success" data-toggle="modal">Go!</a>
     </div>
     <div id="d3">
@@ -71,9 +71,11 @@
     </div>
     <hr>
     <footer>
-      <p>hi</p>
+      <p><a href="#" title="hello">hi there</a></p>
     </footer>
   </div><!--/.container-fluid-->
+  
+  
   
   <!-- SAMPLE BOOTSTRAP MODAL IMPLEMENTATION-->
     <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -90,6 +92,8 @@
       </div>
     </div>
   
+  
+  
   <!-- JAVASCRIPT LIBRARIES -->
   <script src="http://d3js.org/d3.v3.min.js"></script>
   <script src="http://cdn.leafletjs.com/leaflet-0.4/leaflet.js"></script>
@@ -100,6 +104,16 @@
 
   <script>
 
+    // BOOTSTRAP JS IMPLEMENTATIONS
+    $("#errbodyintheclubgettintips").tooltip();
+    $("a").tooltip();
+    
+    $(document).ready(function () {
+        //$("[rel=tooltip]").tooltip();
+        $('#errbodyintheclubgettintips').tooltip();
+        
+      });
+    
     // SAMPLE D3 IMPLEMENTATION
     d3.select("div#d3-container").style("background-color", "#eee");
     
