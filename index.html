@@ -3,82 +3,98 @@
 <head>
   <meta charset="utf-8">
   <title> html_template </title>
-  <link rel="stylesheet" href="assets/css/bootstrap.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"><!-- enable responsiveness based on window size-->
+  <meta name="description" content="An html template with javascript library implementations">
+  <meta name="author" content="@s2t2">
+  <style>
+    body {
+      padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+    }
+  </style>
+  <link rel="stylesheet" href="assets/css/bootstrap.css" media="screen"><!-- needs to be after the body padding declaration-->
+  <link rel="shortcut icon" href="assets/img/favicon.ico">
   <link rel="stylesheet" href="assets/css/font-awesome.css">
   <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.4/leaflet.css" />
   <!--[if lte IE 8]>
-  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.4/leaflet.ie.css" />
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.4/leaflet.ie.css" />
   <![endif]-->
   <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
-  <style>
-    /* CSS HERE */
-  </style>
 </head>
 <body>
-  <div class="container-fluid">
-    <div class="navbar navbar-fixed-top">
-      <div class="navbar-inner">
-        <a class="brand" href="#">HTML Template</a>
-        <ul class="nav">
-          <li><a href="#bootsrap"><i class="icon-twitter"></i> Bootstrap</a></li>
-          <li><a href="#d3"><i class="icon-file"></i> d3</a></li>
-          <li><a href="#leaflet"><i class="icon-leaf"></i> Leaflet</a></li>
-          <li><a href="#highcharts"><i class="icon-bar-chart"></i> Highcharts</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="row">
-      <ul class="thumbnails">
-        <li class="span12">
-          <h2>Bootstrap</h2>
-          <a href="#myModal" role="button" class="btn btn-large btn-block btn-success" data-toggle="modal">Go!</a>
-        </li>
-        <li class="span12">
-          <h2>d3</h2>
-          <div id="d3-container" class="thumbnail" style="height:350px;">
-            <pre>d3.select("div#d3-container").style("background-color", "#eee");</pre>
-          </div>
-        </li>
-        <li class="span12">
-          <h2>Leaflet</h2>
-          <div id="map-container" class="thumbnail" style="height:350px; "></div>
-        </li>
-        <li class="span12">
-          <h2>Highcharts</h2>
-          <div id="chart-container" class="thumbnail" style="height:350px; "></div>
-        </li>
-      </ul>
-    </div>
-  </div><!-- .container -->
   
-  <!-- SAMPLE BOOTSTRAP MODAL IMPLEMENTATION-->
-  <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-      <h3 id="myModalLabel">Modal header</h3>
+  <!-- NAVIGATION BAR -->
+  <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-inner">
+      <div class="container">
+        <!-- EXPAND/COLLAPSE BUTTON -->
+        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+           <span class="icon-bar"></span>
+           <span class="icon-bar"></span>
+           <span class="icon-bar"></span>
+        </a>
+        <!-- BRAND -->
+        <a class="brand" href="#">HTML Template</a>
+        <!-- SECTION THAT WILL COLLAPSE AND MOVE, BASED ON WINDOW SIZE-->
+        <div class="nav-collapse collapse">
+          <!-- THE ACTUAL NAVIGATION-->
+          <ul class="nav">
+            <li><a href="#bootsrap"><i class="icon-twitter"></i> Bootstrap</a></li>
+            <li><a href="#d3"><i class="icon-file"></i> d3</a></li>
+            <li><a href="#leaflet"><i class="icon-leaf"></i> Leaflet</a></li>
+            <li><a href="#highcharts"><i class="icon-bar-chart"></i> Highcharts</a></li>
+          </ul><!-- /.nav -->
+          <p class="navbar-text pull-right">Logged in as <a href="#" class="navbar-link">Username</a></p>
+        </div><!-- /.nav-collapse collapse -->
+      </div><!-- /.container-fluid -->
+    </div><!-- /.navbar-inner -->
+  </div><!-- /.navbar .navbar-inverse .navbar-fixed-top-->
+  
+  <!-- CONTENT CONTAINER -->
+  <div id="page" class="container">
+    <div id="bootstrap">
+      <h2>Bootstrap</h2>
+      <a href="#myModal" role="button" class="btn btn-large btn-block btn-success" data-toggle="modal">Go!</a>
     </div>
-    <div class="modal-body">
-      <p>One fine body…</p>
+    <div id="d3">
+      <h2>d3</h2>
+      <div id="d3-container" class="thumbnail" style="height:256px;"></div>
     </div>
-    <div class="modal-footer">
-      <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-      <button class="btn btn-primary">Save changes</button>
+    <div id="leaflet">
+      <h2>Leaflet</h2>
+      <div id="map-container" class="thumbnail" style="height:256px; "></div>
     </div>
-  </div>
+    <div id="highcharts">
+      <h2>Highcharts</h2>
+      <div id="chart-container" class="thumbnail" style="height:256px; "></div>
+    </div>
+    <hr>
+    <footer>
+      <p>hi</p>
+    </footer>
+  </div><!--/.container-fluid-->
   
   <!-- JAVASCRIPT LIBRARIES -->
   <script src="http://d3js.org/d3.v3.min.js"></script>
   <script src="http://cdn.leafletjs.com/leaflet-0.4/leaflet.js"></script>
-  <!-- JQUERY AND DEPENDENT LIBRARIES -->
+  <!-- JQUERY AND JQUERY-DEPENDENT LIBRARIES -->
   <script src="http://code.jquery.com/jquery-latest.js"></script>
   <script src="assets/js/bootstrap.min.js"></script>                       
   <script src="http://code.highcharts.com/highcharts.js"></script>  
 
   <script>
+    // SAMPLE BOOTSTRAP IMPLEMENTATION
+      $('#navbar').scrollspy()
+    
     // SAMPLE D3 IMPLEMENTATION
     d3.select("div#d3-container").style("background-color", "#eee");
+    
+    // SAMPLE LEAFLET IMPLEMENTATION
+    var map = new L.Map("map-container")
+        .setView(new L.LatLng(41.299042, -72.92577), 8)
+        .addLayer(new L.TileLayer("http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/44094/256/{z}/{x}/{y}.png"));
+    map.scrollWheelZoom.disable();
     
     // SAMPLE HIGHCHARTS IMPLEMENTATION
     $(function () {
@@ -93,7 +109,7 @@
                     text: 'Stacked column chart'
                 },
                 xAxis: {
-                    categories: ['Apples', 'Oranges', 'Pears', 'Grapes', 'Bananas']
+                  categories: ['Apples', 'Oranges', 'Pears', 'Grapes', 'Bananas']
                 },
                 yAxis: {
                     min: 0,
@@ -149,11 +165,6 @@
         });
     }); 
     
-    // SAMPLE LEAFLET IMPLEMENTATION
-    var map = new L.Map("map-container")
-        .setView(new L.LatLng(41.299042, -72.92577), 8)
-        .addLayer(new L.TileLayer("http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/44094/256/{z}/{x}/{y}.png"));
-      map.scrollWheelZoom.disable();
   </script>
 
 </body>
