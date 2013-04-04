@@ -2,190 +2,76 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title> html_template </title>
+  <title> scout </title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"><!-- enable responsiveness based on window size-->
-  <meta name="description" content="An html template with javascript library implementations">
+  <meta name="description" content="a tool for scouting.">
   <meta name="author" content="@s2t2">
   <style>
-    body {
-      padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+   
+    h1, h2, h3, h4, h5, h6, p, a {
+      color: #333;
+      font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; /* http://css-tricks.com/snippets/css/better-helvetica/ */
+      font-weight: 300;
+    }
+    #container {
+      width: 600px;
+      margin: 0 auto;
+    }
+    .field {
+      background-color: #66994F;
+    }
+    .goal {
+      fill: white;
+    }
+    .crease {
+      fill: none;
+      stroke:white;
+      stroke-width:4px;
     }
   </style>
   <link rel="stylesheet" href="assets/css/bootstrap.css" media="screen"><!-- needs to be after the body padding declaration-->
   <link rel="shortcut icon" href="assets/img/favicon.ico">
   <link rel="stylesheet" href="assets/css/font-awesome.css">
-  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.4/leaflet.css" />
-  <!--[if lte IE 8]>
-    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.4/leaflet.ie.css" />
-  <![endif]-->
-  <!--[if lt IE 9]>
-    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-  <![endif]-->
 </head>
-<body data-spy="scroll" data-target="#mainNav" data-offset="60">
-  
-  <!-- NAVIGATION BAR -->
-  <div class="navbar navbar-inverse navbar-fixed-top" id="mainNav">
-    <div class="navbar-inner">
-      <div class="container">
-        <!-- EXPAND/COLLAPSE BUTTON -->
-        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-           <span class="icon-bar"></span>
-           <span class="icon-bar"></span>
-           <span class="icon-bar"></span>
-        </a>
-        <!-- BRAND -->
-        <a class="brand" href="">HTML Template</a>
-        <!-- SECTION THAT WILL COLLAPSE AND MOVE, BASED ON WINDOW SIZE-->
-        <div class="nav-collapse collapse">
-          <!-- THE ACTUAL NAVIGATION-->
-          <ul class="nav">
-            <li class="active"><a href="#bootstrap"><i class="icon-twitter"></i> Bootstrap</a></li>
-            <li><a href="#d3"><i class="icon-file"></i> d3</a></li>
-            <li><a href="#leaflet"><i class="icon-leaf"></i> Leaflet</a></li>
-            <li><a href="#highcharts"><i class="icon-bar-chart"></i> Highcharts</a></li>
-          </ul><!-- /.nav -->
-          <p class="navbar-text pull-right">Logged in as <a href="#" class="navbar-link">Username</a></p>
-        </div><!-- /.nav-collapse collapse -->
-      </div><!-- /.container-fluid -->
-    </div><!-- /.navbar-inner -->
-  </div><!-- /.navbar .navbar-inverse .navbar-fixed-top-->
-  
-  <!-- CONTENT CONTAINER -->
-  <div id="page" class="container">
-    <div id="bootstrap">
-      <h2>Bootstrap</h2>
-      <a href="#myModal" role="button" class="btn btn-large btn-block btn-success" data-toggle="modal">Go!</a>
-    </div>
-    <div id="d3">
-      <h2>d3</h2>
-      <div id="d3-container" class="thumbnail" style="height:256px;"></div>
-    </div>
-    <div id="leaflet">
-      <h2>Leaflet</h2>
-      <div id="map-container" class="thumbnail" style="height:256px; "></div>
-    </div>
-    <div id="highcharts">
-      <h2>Highcharts</h2>
-      <div id="chart-container" class="thumbnail" style="height:256px; "></div>
-    </div>
+<body>
+  <div id="container">
+    <header>
+      <h1><a href="#" title="hello">Man-Down</a></h1>
+    </header>
     <hr>
-    <footer>
-      <p><a href="#" title="hello">hi there</a></p>
-    </footer>
-  </div><!--/.container-fluid-->
-  
-  
-  
-  <!-- SAMPLE BOOTSTRAP MODAL IMPLEMENTATION-->
-    <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h3 id="myModalLabel">Modal header</h3>
-      </div>
-      <div class="modal-body">
-        <p>One fine body…</p>
-      </div>
-      <div class="modal-footer">
-        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-        <button class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  
-  
-  
-  <!-- JAVASCRIPT LIBRARIES -->
+  </div>
   <script src="http://d3js.org/d3.v3.min.js"></script>
-  <script src="http://cdn.leafletjs.com/leaflet-0.4/leaflet.js"></script>
-  <!-- JQUERY AND JQUERY-DEPENDENT LIBRARIES -->
   <script src="http://code.jquery.com/jquery-latest.js"></script>
   <script src="assets/js/bootstrap.min.js"></script>                       
-  <script src="http://code.highcharts.com/highcharts.js"></script>  
-
   <script>
-
-    // BOOTSTRAP JS IMPLEMENTATIONS
-    $("a").tooltip();
+    var h = 400;
+    var w = 600;
+    var middle = w/2;
+    var gle = h/5;
     
-    // SAMPLE D3 IMPLEMENTATION
-    d3.select("div#d3-container").style("background-color", "#eee");
+    var field = d3.select("div#container").append("svg")
+          .attr("height", h)
+          .attr("width", w)
+          .attr("class"," field half-field");
     
-    // SAMPLE LEAFLET IMPLEMENTATION
-    var map = new L.Map("map-container")
-        .setView(new L.LatLng(41.299042, -72.92577), 8)
-        .addLayer(new L.TileLayer("http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/44094/256/{z}/{x}/{y}.png"));
-    map.scrollWheelZoom.disable();
+    var field_markers = field.append("g");
     
-    // SAMPLE HIGHCHARTS IMPLEMENTATION
-    $(function () {
-        var chart;
-        $(document).ready(function() {
-            chart = new Highcharts.Chart({
-                chart: {
-                    renderTo: 'chart-container',
-                    type: 'column'
-                },
-                title: {
-                    text: 'Stacked column chart'
-                },
-                xAxis: {
-                  categories: ['Apples', 'Oranges', 'Pears', 'Grapes', 'Bananas']
-                },
-                yAxis: {
-                    min: 0,
-                    title: {
-                        text: 'Total fruit consumption'
-                    },
-                    stackLabels: {
-                        enabled: true,
-                        style: {
-                            fontWeight: 'bold',
-                            color: (Highcharts.theme && Highcharts.theme.textColor) || 'gray'
-                        }
-                    }
-                },
-                legend: {
-                    align: 'right',
-                    x: -100,
-                    verticalAlign: 'top',
-                    y: 20,
-                    floating: true,
-                    backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColorSolid) || 'white',
-                    borderColor: '#CCC',
-                    borderWidth: 1,
-                    shadow: false
-                },
-                tooltip: {
-                    formatter: function() {
-                        return '<b>'+ this.x +'</b><br/>'+
-                            this.series.name +': '+ this.y +'<br/>'+
-                            'Total: '+ this.point.stackTotal;
-                    }
-                },
-                plotOptions: {
-                    column: {
-                        stacking: 'normal',
-                        dataLabels: {
-                            enabled: true,
-                            color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white'
-                        }
-                    }
-                },
-                series: [{
-                    name: 'John',
-                    data: [5, 3, 4, 7, 2]
-                }, {
-                    name: 'Jane',
-                    data: [2, 2, 3, 2, 1]
-                }, {
-                    name: 'Joe',
-                    data: [3, 4, 4, 2, 5]
-                }]
-            });
-        });
-    }); 
+    var crease = field_markers.append("circle")
+          .attr("cx", middle)
+          .attr("cy", gle)
+          .attr("r", 25)
+          .attr("class","crease");
     
+    var net = field_markers.append("path")
+          .attr("transform", "translate(" + middle + "," + gle + ")") 
+          .attr("d", d3.svg.symbol().type("triangle-up").size(300))
+          .attr("class","goal");
+    // var box = paint.append("path")
+    //       .attr("transform", "translate(" + middle + "," + gle + ")")
+    //       .attr("d",d3.svg.symbol().type("rectangle").size(2000))
+    
+  
+  
   </script>
-
 </body>
 </html>
