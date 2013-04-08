@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title> scout </title>
+  <title> playbook </title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"><!-- enable responsiveness based on window size-->
-  <meta name="description" content="a tool for scouting.">
-  <meta name="author" content="@s2t2">
+  <meta name="description" content="a tool for coaches.">
+  <meta name="author" content="s2t2">
   <style>
    
     h1, h2, h3, h4, h5, h6, p, a {
@@ -13,21 +13,46 @@
       font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; /* http://css-tricks.com/snippets/css/better-helvetica/ */
       font-weight: 300;
     }
+    
     #container {
-      width: 600px;
+      width: 960px;
       margin: 0 auto;
     }
+    
+    #nav {
+      display: inline;
+    }
+   
+    #nav li{
+      display: inline;
+      list-style-type: none;
+    }
+    
+    div.play {
+      border:1px dotted #ccc;
+      margin-bottom:10px;
+    }
+    
+    svg {
+      border:1px solid #ccc;
+    }
+    
+    
+    
+    
+    
     .field {
       background-color: #66994F;
     }
     .goal {
       fill: white;
     }
-    .crease {
+    .marker {
       fill: none;
       stroke:white;
-      stroke-width:4px;
+      stroke-width:2px;
     }
+    
   </style>
   <link rel="stylesheet" href="assets/css/bootstrap.css" media="screen"><!-- needs to be after the body padding declaration-->
   <link rel="shortcut icon" href="assets/img/favicon.ico">
@@ -36,42 +61,189 @@
 <body>
   <div id="container">
     <header>
-      <h1><a href="#" title="hello">Man-Down</a></h1>
+      <h1 style="display:inline;"><a href="#" title="hello">Playbook</a></h1>
+      <ul id="nav">
+        <li><a href="#" title="Offensive Plays">Offense</a> | </li>
+        <li><a href="#" title="Defensive Plays">Defense</a> | </li>
+        <li><a href="#" title="Man-Up Plays">Man-Up</a> | </li>
+        <li><a href="#" title="Man-Down Plays">Man-Down</a> | </li>
+        <li><a href="#" title="Clears">Clears</a> | </li>
+        <li><a href="#" title="Rides">Rides</a></li>
+      </ul>
+      <hr>
     </header>
-    <hr>
   </div>
   <script src="http://d3js.org/d3.v3.min.js"></script>
   <script src="http://code.jquery.com/jquery-latest.js"></script>
   <script src="assets/js/bootstrap.min.js"></script>                       
   <script>
-    var h = 400;
-    var w = 600;
-    var middle = w/2;
-    var gle = h/5;
-    
-    var field = d3.select("div#container").append("svg")
-          .attr("height", h)
-          .attr("width", w)
-          .attr("class"," field half-field");
-    
-    var field_markers = field.append("g");
-    
-    var crease = field_markers.append("circle")
-          .attr("cx", middle)
-          .attr("cy", gle)
-          .attr("r", 25)
-          .attr("class","crease");
-    
-    var net = field_markers.append("path")
-          .attr("transform", "translate(" + middle + "," + gle + ")") 
-          .attr("d", d3.svg.symbol().type("triangle-up").size(300))
-          .attr("class","goal");
+    // var h = 400,
+    //     w = 600,
+    //     middle = w/2,
+    //     gle = h/5,
+    //     midfield = h - h/10,
+    //     crease_radius = 30;
+    // 
+    // var field = d3.select("div#container").append("svg")
+    //     .attr("height", h)
+    //     .attr("width", w)
+    //     .attr("class"," field half-field");
+    // 
+    // var field_markers = field.append("g");
+    // 
+    // var crease = field_markers.append("circle")
+    //     .attr("cx", middle)
+    //     .attr("cy", gle)
+    //     .attr("r", crease_radius)
+    //     .attr("class","crease");
+    // 
+    // var goal = field_markers.append("path")
+    //     .attr("transform", "translate(" + middle + "," + (gle - crease_radius/4) + ")") //offsets the goal towards the back of the crease
+    //     .attr("d", d3.svg.symbol().type("triangle-up").size(400))
+    //     .attr("class","goal");
+
     // var box = paint.append("path")
     //       .attr("transform", "translate(" + middle + "," + gle + ")")
     //       .attr("d",d3.svg.symbol().type("rectangle").size(2000))
     
-  
-  
+    
+    
+    
+
+
+
+
+
+    // declare variables
+    var div_h = 700;
+    var div_w = 960;
+    var div_m = {t: 60, r: 0, b: 0, l:0};
+    
+    var svg_w = div_w - div_m.l - div_m.r - 2;
+    var svg_h = div_h - div_m.t - div_m.b;
+    
+    var field_gle = svg_h/4;
+    var field_center = svg_w/2;
+    var crease_radius = 30;
+    var left_hash = svg_w/6;
+    var right_hash = svg_w - left_hash;
+    var fifty_yd = svg_h * 9/10
+    
+    
+    
+    var plays = [
+      {name:"Rocket", type:"Offensive"},
+      {name:"Sideways", type:"Offensive"}
+    ];
+    var player_sets = [
+      {set:"Offensive", players:[ 
+        {id:"A1", x:10, y:10},
+        {id:"A2", x:10, y:10},
+        {id:"A3", x:10, y:10},
+        {id:"M1", x:10, y:10},
+        {id:"M2", x:10, y:10},
+        {id:"M3", x:10, y:10} 
+      ]},
+      {set:"Defensive", players:[ 
+        {id:"LP1"},{id:"LP2"},{id:"LP3"},
+        {id:"LSM"},{id:"M1"},{id:"M2"} 
+      ]}
+    ];
+    
+    // create a div for each play
+    var div = d3.select("#container").selectAll("div")
+        .data(plays)
+      .enter().append("div")
+        .attr("class","play")
+        .attr("id", function(d) { return d.name })
+        .attr("style","height:" + div_h + "px;")
+      ;
+    
+    // create a title for earch play
+    div.append("h3")
+        .text(function(d){
+          return d.name;
+        });
+    
+    // create an svg for each play
+    var field = div.append("svg")
+        .attr("height", svg_h)
+        .attr("width", svg_w)
+        .attr("id", function(d){
+          return d.name;
+        })
+        .attr("class","field");
+    
+    // draw the field on each svg
+    var field_markers = field.append("g")
+        .attr("class", "field_markers");
+    
+    var crease = field_markers.append("circle")
+        .attr("r", crease_radius)
+        .attr("cx", field_center )
+        .attr("cy", field_gle)
+        .attr("class","crease marker");
+        
+    var goal = field_markers.append("path")
+        .attr("transform", "translate(" + field_center + "," + (field_gle - crease_radius/4) + ")") //offsets the goal towards the back of the crease
+        .attr("d", d3.svg.symbol().type("triangle-up").size(400))
+        .attr("class","goal marker");
+    
+    var box = field_markers.append("rect")
+        .attr("x", left_hash )
+        .attr("y", 0)
+        .attr("height", svg_h * 2/3)
+        .attr("width", right_hash - left_hash)
+        .attr("class","box marker");
+    
+    var midline = field_markers.append("line")
+        .attr("x1", 0)
+        .attr("y1", fifty_yd)
+        .attr("x2", svg_w)
+        .attr("y2", fifty_yd)
+        .attr("stroke-width", 2)
+        .attr("stroke", "black")
+        .attr("class", "midline marker");
+        
+    // draw the offensive players
+    
+    // move the offensive players along defined paths
+    
+    
+    
+    
+   // // DRAGGING
+   // var drag = d3.behavior.drag()
+   //     .origin(Object)
+   //     .on("drag", dragmove);
+   // 
+   // function dragmove(d) {
+   //   d3.select(this)
+   //       .attr("cx", d.x = Math.max(radius, Math.min(width - radius, d3.event.x)))
+   //       .attr("cy", d.y = Math.max(radius, Math.min(height - radius, d3.event.y)));
+   // }
+   // 
+   // // SVG
+   // var svg = d3.select("#container").selectAll("svg")
+   //     .data(plays)
+   //   .enter().append("svg")
+   //     .attr("width", width)
+   //     .attr("height", height)
+   //     .attr("id", function(d) { 
+   //       return d.name;
+   //     });
+   // 
+   // // CIRCLE
+   // svg.append("circle")
+   //     .attr("r", radius)
+   //     .attr("cx", function(d) { return d.x; })
+   //     .attr("cy", function(d) { return d.y; })
+   //     .call(drag);
+    
+    
+    // debugging
+    console.log(plays);
+    console.log(player_sets);
   </script>
 </body>
 </html>
