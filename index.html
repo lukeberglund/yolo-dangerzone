@@ -35,11 +35,7 @@
     
     svg {
       border:1px solid #ccc;
-    }
-    
-    
-    
-    
+    } 
     
     .field {
       background-color: #66994F;
@@ -77,59 +73,26 @@
   <script src="http://code.jquery.com/jquery-latest.js"></script>
   <script src="assets/js/bootstrap.min.js"></script>                       
   <script>
-    // var h = 400,
-    //     w = 600,
-    //     middle = w/2,
-    //     gle = h/5,
-    //     midfield = h - h/10,
-    //     crease_radius = 30;
-    // 
-    // var field = d3.select("div#container").append("svg")
-    //     .attr("height", h)
-    //     .attr("width", w)
-    //     .attr("class"," field half-field");
-    // 
-    // var field_markers = field.append("g");
-    // 
-    // var crease = field_markers.append("circle")
-    //     .attr("cx", middle)
-    //     .attr("cy", gle)
-    //     .attr("r", crease_radius)
-    //     .attr("class","crease");
-    // 
-    // var goal = field_markers.append("path")
-    //     .attr("transform", "translate(" + middle + "," + (gle - crease_radius/4) + ")") //offsets the goal towards the back of the crease
-    //     .attr("d", d3.svg.symbol().type("triangle-up").size(400))
-    //     .attr("class","goal");
-
-    // var box = paint.append("path")
-    //       .attr("transform", "translate(" + middle + "," + gle + ")")
-    //       .attr("d",d3.svg.symbol().type("rectangle").size(2000))
-    
-    
-    
-    
-
-
-
-
+    // FYI - THIS IS A PROTOTYPE THAT NEEDS MAJOR REFACTORING
 
     // declare variables
-    var div_h = 700;
-    var div_w = 960;
+    var div_h = 750;
+    var div_w = div_h * 60/110; // make the width proportional to the height
     var div_m = {t: 60, r: 0, b: 0, l:0};
     
-    var svg_w = div_w - div_m.l - div_m.r - 2;
+    var svg_w = div_w - div_m.l - div_m.r;
     var svg_h = div_h - div_m.t - div_m.b;
     
-    var field_gle = svg_h/4;
-    var field_center = svg_w/2;
-    var crease_radius = 30;
-    var left_hash = svg_w/6;
-    var right_hash = svg_w - left_hash;
-    var fifty_yd = svg_h * 9/10
+    var crease_radius = 25;
     
-    
+    // configure scales that will convert yard-line measurements to the proper svg coords
+    var yYardScale = d3.scale.linear()
+        .domain([-5,105]) // the lacrosse field is 110 yards long centered on the 50 yard line
+        .range([0,svg_h]); //the svh represents the whole field
+        
+    var xYardScale = d3.scale.linear()
+        .domain([0,60]) // the lacrosse field is 60 yards wide
+        .range([0,svg_w]); //the svh represents the whole field
     
     var plays = [
       {name:"Rocket", type:"Offensive"},
@@ -150,14 +113,16 @@
       ]}
     ];
     
+    // create site navigation based on plays
+    // #TODO
+    
     // create a div for each play
     var div = d3.select("#container").selectAll("div")
         .data(plays)
       .enter().append("div")
         .attr("class","play")
         .attr("id", function(d) { return d.name })
-        .attr("style","height:" + div_h + "px;")
-      ;
+        .attr("style","height:" + div_h + "px;");
     
     // create a title for earch play
     div.append("h3")
@@ -178,38 +143,74 @@
     var field_markers = field.append("g")
         .attr("class", "field_markers");
     
-    var crease = field_markers.append("circle")
-        .attr("r", crease_radius)
-        .attr("cx", field_center )
-        .attr("cy", field_gle)
+    var crease1 = field_markers.append("circle")
+        .attr("cx", xYardScale(30) )  // the crease sits in the center of the field,
+        .attr("cy", yYardScale(10))   // on the GLE
+        .attr("r", crease_radius)     // with a radius of 9 yards
+        .attr("class","crease marker");
+    
+    var crease2 = field_markers.append("circle")
+        .attr("cx", xYardScale(30) )  // the crease sits in the center of the field,
+        .attr("cy", yYardScale(90))  // on the GLE
+        .attr("r", crease_radius)     // with a radius of 9 yards
         .attr("class","crease marker");
         
-    var goal = field_markers.append("path")
-        .attr("transform", "translate(" + field_center + "," + (field_gle - crease_radius/4) + ")") //offsets the goal towards the back of the crease
-        .attr("d", d3.svg.symbol().type("triangle-up").size(400))
+    var goal1 = field_markers.append("path")
+        .attr("transform", "translate(" + xYardScale(30) + "," + (yYardScale(10) - crease_radius/4) + ")") //offsets the goal towards the back of the crease
+        .attr("d", d3.svg.symbol().type("triangle-up").size(crease_radius * 8))
+        .attr("class","goal marker");
+
+    var goal2 = field_markers.append("path")
+        .attr("transform", "translate(" + xYardScale(30) + "," + (yYardScale(90) + crease_radius /4 ) + ")") //offsets the goal towards the back of the crease
+        .attr("d", d3.svg.symbol().type("triangle-down").size(crease_radius * 8))
         .attr("class","goal marker");
     
-    var box = field_markers.append("rect")
-        .attr("x", left_hash )
-        .attr("y", 0)
-        .attr("height", svg_h * 2/3)
-        .attr("width", right_hash - left_hash)
+    var box1 = field_markers.append("rect")
+        .attr("x", xYardScale(10) )     // the box has a horizontal margin of 10 yards ...
+        .attr("width", xYardScale(40))  // on either side,
+        .attr("y", yYardScale(-5))      // and extends from the endline ...
+        .attr("height", yYardScale(30)) // to the 30 yard line
         .attr("class","box marker");
-    
+
+    var box2 = field_markers.append("rect")
+        .attr("x", xYardScale(10) )     // the box has a horizontal margin of 10 yards ...
+        .attr("width", xYardScale(40))  // on either side,
+        .attr("y", yYardScale(70))      // and extends from the endline ...
+        .attr("height", yYardScale(30)) // to the 30 yard line
+        .attr("class","box marker");
+
     var midline = field_markers.append("line")
-        .attr("x1", 0)
-        .attr("y1", fifty_yd)
-        .attr("x2", svg_w)
-        .attr("y2", fifty_yd)
-        .attr("stroke-width", 2)
-        .attr("stroke", "black")
+        .attr("x1", xYardScale(0))
+        .attr("x2", xYardScale(60))
+        .attr("y1", yYardScale(50))
+        .attr("y2", yYardScale(50))
         .attr("class", "midline marker");
         
+    var left_wing = field_markers.append("line")
+        .attr("x1", xYardScale(10))
+        .attr("x2", xYardScale(10))
+        .attr("y1", yYardScale(40))
+        .attr("y2", yYardScale(60))
+        .attr("class", "wing marker");
+    
+    var right_wing = field_markers.append("line")
+        .attr("x1", xYardScale(50))
+        .attr("x2", xYardScale(50))
+        .attr("y1", yYardScale(40))
+        .attr("y2", yYardScale(60))
+        .attr("class", "wing marker");
+    
+    var eks = field_markers.append("text")
+        .text("x")
+        .attr("x", xYardScale(30) )         
+        .attr("y", yYardScale(50.5) )         
+        .attr("class","eks marker");
+
     // draw the offensive players
+    // #TODO
     
     // move the offensive players along defined paths
-    
-    
+    // #TODO
     
     
    // // DRAGGING
