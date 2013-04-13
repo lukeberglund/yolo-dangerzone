@@ -202,16 +202,30 @@
     
     var eks = field_markers.append("text")
         .text("x")
-        .attr("x", xYardScale(30) )         
-        .attr("y", yYardScale(50.5) )         
+        .attr("x", xYardScale(30) )
+        .attr("y", yYardScale(50.5) )
         .attr("class","eks marker");
 
     // draw the offensive players
+    var players = field.append("g");
     // #TODO
+    var temp_player = players.append("text")
+        .text("ss")
+        .attr("x", xYardScale(30) )
+        .attr("y", yYardScale(25) )
+        .attr("class","player");
     
     // move the offensive players along defined paths
     // #TODO
-    
+    temp_player.transition()
+        .duration(6000)
+        .attr("y", yYardScale(35) )
+      .transition()
+        .duration(6000)
+        .attr("y", yYardScale(25) )
+      .transition()
+        .duration(6000)
+        .attr("y", yYardScale(35) );
     
    // // DRAGGING
    // var drag = d3.behavior.drag()
